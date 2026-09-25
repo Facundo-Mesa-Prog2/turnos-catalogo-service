@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "turnosCatalogoService",
+    "buildTool": "maven",
+    "cacheProvider": "ehcache",
+    "clientFramework": "no",
+    "clientTestFrameworks": null,
+    "clientTheme": null,
+    "creationTimestamp": 1790308378097,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "enableHibernateCache": false,
+    "enableTranslation": false,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "8.11.0",
+    "jwtSecretKey": "ODFmN2NkNmQyN2RmMzdmODVkYzZkOTg1Mjg0YjZlNjE4NjcxMTllMTg1Zjc1OWNmNDhjMzIzYTRlOTU3Y2E3ZTJmMjdhYmUxNWI3ZTYxMDg0NjhkMzJlNjllNGY3ODg4YmNhMGE4ZTM4MDQyODZiOTE1NDcwZmE3MThlNjA3ZmI=",
+    "microfrontend": null,
+    "microfrontends": [],
+    "nativeLanguage": "es",
+    "packageName": "ar.edu.um.turnos.catalogo",
+    "prodDatabaseType": "postgresql",
+    "reactive": false,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "skipClient": true,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "withAdminUi": null
+  }
+}

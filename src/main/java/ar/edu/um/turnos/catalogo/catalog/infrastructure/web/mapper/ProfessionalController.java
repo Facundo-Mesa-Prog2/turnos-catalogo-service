@@ -1,18 +1,13 @@
 package ar.edu.um.turnos.catalogo.catalog.infrastructure.web.mapper;
 
+import ar.edu.um.turnos.catalogo.catalog.application.service.CatalogService;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.Professional;
-import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalCategory;
+import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalWithCategory;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageRequest;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageResult;
-import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.GetProfessionalByIdUseCase;
-import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.SearchProfessionalsUseCase;
-import ar.edu.um.turnos.catalogo.catalog.domain.ports.out.ProfessionalCategoryRepository;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.dto.PageResponse;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.dto.ProfessionalResponse;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.mapper.ProfessionalDtoMapper;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class ProfessionalController {
 
-    private final SearchProfessionalsUseCase searchProfessionalsUseCase;
-    private final GetProfessionalByIdUseCase getProfessionalByIdUseCase;
-    private final ProfessionalCategoryRepository categoryRepository;
+    private final CatalogService catalogService;
     private final ProfessionalDtoMapper mapper;
 
     @GetMapping
@@ -37,31 +30,21 @@ public class ProfessionalController {
         @RequestParam(defaultValue = "20") int size
     ) {
         PageRequest pageRequest = PageRequest.builder().page(page).size(size).build();
-        PageResult<Professional> result = searchProfessionalsUseCase.searchProfessionals(categoryId, text, pageRequest);
+        PageResult<Professional> result = catalogService.searchProfessionals(categoryId, text, pageRequest);
 
-        Map<Long, String> categoryNames = new HashMap<>();
-
-        PageResponse<ProfessionalResponse> response = mapper.toPageResponse(result, professional ->
-            mapper.toResponse(
-                professional,
-                categoryNames.computeIfAbsent(professional.getCategoryId(), id ->
-                    categoryRepository.findById(id).map(ProfessionalCategory::getName).orElse(null)
-                )
-            )
-        );
+        PageResponse<ProfessionalResponse> response = mapper.toPageResponse(result, professional -> mapper.toResponse(professional, null));
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ProfessionalResponse> getById(@PathVariable Long id) {
-        Professional professional = getProfessionalByIdUseCase
-            .getProfessionalById(id)
-            .filter(Professional::isEnabled)
+        ProfessionalWithCategory detail = catalogService
+            .getProfessionalDetail(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Profesional no encontrado"));
 
-        String categoryName = categoryRepository.findById(professional.getCategoryId()).map(ProfessionalCategory::getName).orElse(null);
+        String categoryName = detail.getCategory() != null ? detail.getCategory().getName() : null;
 
-        return ResponseEntity.ok(mapper.toResponse(professional, categoryName));
+        return ResponseEntity.ok(mapper.toResponse(detail.getProfessional(), categoryName));
     }
 }

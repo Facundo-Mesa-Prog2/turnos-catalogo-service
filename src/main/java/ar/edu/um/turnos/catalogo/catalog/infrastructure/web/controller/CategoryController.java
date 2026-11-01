@@ -1,6 +1,6 @@
 package ar.edu.um.turnos.catalogo.catalog.infrastructure.web.controller;
 
-import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.ListCategoriesUseCase;
+import ar.edu.um.turnos.catalogo.catalog.application.service.CatalogService;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.dto.CategoryResponse;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.mapper.CategoryDtoMapper;
 import java.util.List;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CategoryController {
 
-    private final ListCategoriesUseCase listCategoriesUseCase;
+    private final CatalogService catalogService;
     private final CategoryDtoMapper categoryDtoMapper;
 
     @GetMapping
     public ResponseEntity<List<CategoryResponse>> listCategories() {
-        List<CategoryResponse> responses = listCategoriesUseCase
+        List<CategoryResponse> responses = catalogService
             .listCategories()
             .stream()
             .map(categoryDtoMapper::toResponse)

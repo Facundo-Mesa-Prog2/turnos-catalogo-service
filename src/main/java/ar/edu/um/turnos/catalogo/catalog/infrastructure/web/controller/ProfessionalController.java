@@ -1,4 +1,4 @@
-package ar.edu.um.turnos.catalogo.catalog.infrastructure.web.mapper;
+package ar.edu.um.turnos.catalogo.catalog.infrastructure.web.controller;
 
 import ar.edu.um.turnos.catalogo.catalog.application.service.CatalogService;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.Professional;
@@ -7,7 +7,11 @@ import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageRequest;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageResult;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.dto.PageResponse;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.dto.ProfessionalResponse;
+import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.dto.WeeklyScheduleResponse;
 import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.mapper.ProfessionalDtoMapper;
+import ar.edu.um.turnos.catalogo.catalog.infrastructure.web.mapper.WeeklyScheduleDtoMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,7 @@ public class ProfessionalController {
 
     private final CatalogService catalogService;
     private final ProfessionalDtoMapper mapper;
+    private final WeeklyScheduleDtoMapper scheduleMapper;
 
     @GetMapping
     public ResponseEntity<PageResponse<ProfessionalResponse>> search(
@@ -46,5 +51,16 @@ public class ProfessionalController {
         String categoryName = detail.getCategory() != null ? detail.getCategory().getName() : null;
 
         return ResponseEntity.ok(mapper.toResponse(detail.getProfessional(), categoryName));
+    }
+
+    @GetMapping("/{id}/schedule")
+    public ResponseEntity<List<WeeklyScheduleResponse>> getSchedule(@PathVariable Long id) {
+        List<WeeklyScheduleResponse> schedules = catalogService
+            .getProfessionalSchedule(id)
+            .stream()
+            .map(scheduleMapper::toResponse)
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(schedules);
     }
 }

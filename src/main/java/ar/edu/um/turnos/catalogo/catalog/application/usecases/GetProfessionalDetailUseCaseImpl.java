@@ -1,8 +1,7 @@
-package ar.edu.um.turnos.catalogo.catalog.domain.ports.in;
+package ar.edu.um.turnos.catalogo.catalog.application.usecases;
 
 import ar.edu.um.turnos.catalogo.catalog.domain.model.Professional;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalWithCategory;
-import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.GetProfessionalDetailUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.out.ProfessionalCategoryRepository;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.out.ProfessionalRepository;
 import java.util.Optional;

@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories({ "ar.edu.um.turnos.catalogo.repository" })
+@EnableJpaRepositories(
+    { "ar.edu.um.turnos.catalogo.repository", "ar.edu.um.turnos.catalogo.catalog.infrastructure.persistence.repository" }
+)
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {}

@@ -105,3 +105,7 @@ jhipster:
 # ===================================================================
 
 # application:
+
+catedra:
+  base-url: ${CATEDRA_BASE_URL}
+  jwt: ${CATEDRA_JWT}

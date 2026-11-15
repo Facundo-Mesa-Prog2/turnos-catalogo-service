@@ -9,6 +9,7 @@ import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageRequest;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageResult;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.GetProfessionalScheduleUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.ListCategoriesUseCase;
+import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.LoadCatalogSnapshotUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.SearchProfessionalsUseCase;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ public class CatalogService {
     private final SearchProfessionalsUseCase searchProfessionalsUseCase;
     private final GetProfessionalDetailUseCase getProfessionalDetailUseCase;
     private final GetProfessionalScheduleUseCase getProfessionalScheduleUseCase;
+    private final LoadCatalogSnapshotUseCase loadCatalogSnapshotUseCase;
 
     public List<ProfessionalCategory> listCategories() {
         return listCategoriesUseCase.listCategories();
@@ -38,5 +40,9 @@ public class CatalogService {
 
     public List<WeeklySchedule> getProfessionalSchedule(Long professionalId) {
         return getProfessionalScheduleUseCase.getProfessionalSchedule(professionalId);
+    }
+
+    public Long loadSnapshot() {
+        return loadCatalogSnapshotUseCase.loadSnapshot();
     }
 }

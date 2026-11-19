@@ -109,3 +109,8 @@ jhipster:
 catedra:
   base-url: ${CATEDRA_BASE_URL}
   jwt: ${CATEDRA_JWT}
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    username: ${REDIS_USERNAME}
+    password: ${REDIS_PASSWORD}

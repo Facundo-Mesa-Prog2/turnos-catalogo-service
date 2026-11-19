@@ -1,6 +1,7 @@
 package ar.edu.um.turnos.catalogo.catalog.application.service;
 
 import ar.edu.um.turnos.catalogo.catalog.application.usecases.GetProfessionalDetailUseCase;
+import ar.edu.um.turnos.catalogo.catalog.domain.model.CatalogSyncResult;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.Professional;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalCategory;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalWithCategory;
@@ -11,6 +12,7 @@ import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.GetProfessionalSchedule
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.ListCategoriesUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.LoadCatalogSnapshotUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.SearchProfessionalsUseCase;
+import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.SyncCatalogUseCase;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class CatalogService {
     private final GetProfessionalDetailUseCase getProfessionalDetailUseCase;
     private final GetProfessionalScheduleUseCase getProfessionalScheduleUseCase;
     private final LoadCatalogSnapshotUseCase loadCatalogSnapshotUseCase;
+    private final SyncCatalogUseCase syncCatalogUseCase;
 
     public List<ProfessionalCategory> listCategories() {
         return listCategoriesUseCase.listCategories();
@@ -44,5 +47,9 @@ public class CatalogService {
 
     public Long loadSnapshot() {
         return loadCatalogSnapshotUseCase.loadSnapshot();
+    }
+
+    public CatalogSyncResult syncCatalog() {
+        return syncCatalogUseCase.syncCatalog();
     }
 }

@@ -105,3 +105,18 @@ jhipster:
 # ===================================================================
 
 # application:
+
+catedra:
+  base-url: ${CATEDRA_BASE_URL}
+  jwt: ${CATEDRA_JWT}
+  sync:
+    on-startup: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    topic: ${KAFKA_CATALOG_TOPIC}
+    group-id: ${KAFKA_CONSUMER_GROUP_ID}
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    username: ${REDIS_USERNAME}
+    password: ${REDIS_PASSWORD}

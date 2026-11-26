@@ -1,6 +1,7 @@
 package ar.edu.um.turnos.catalogo.catalog.application.service;
 
 import ar.edu.um.turnos.catalogo.catalog.application.usecases.GetProfessionalDetailUseCase;
+import ar.edu.um.turnos.catalogo.catalog.domain.model.CatalogSyncResult;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.Professional;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalCategory;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.ProfessionalWithCategory;
@@ -9,7 +10,9 @@ import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageRequest;
 import ar.edu.um.turnos.catalogo.catalog.domain.model.page.PageResult;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.GetProfessionalScheduleUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.ListCategoriesUseCase;
+import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.LoadCatalogSnapshotUseCase;
 import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.SearchProfessionalsUseCase;
+import ar.edu.um.turnos.catalogo.catalog.domain.ports.in.SyncCatalogUseCase;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,8 @@ public class CatalogService {
     private final SearchProfessionalsUseCase searchProfessionalsUseCase;
     private final GetProfessionalDetailUseCase getProfessionalDetailUseCase;
     private final GetProfessionalScheduleUseCase getProfessionalScheduleUseCase;
+    private final LoadCatalogSnapshotUseCase loadCatalogSnapshotUseCase;
+    private final SyncCatalogUseCase syncCatalogUseCase;
 
     public List<ProfessionalCategory> listCategories() {
         return listCategoriesUseCase.listCategories();
@@ -38,5 +43,13 @@ public class CatalogService {
 
     public List<WeeklySchedule> getProfessionalSchedule(Long professionalId) {
         return getProfessionalScheduleUseCase.getProfessionalSchedule(professionalId);
+    }
+
+    public Long loadSnapshot() {
+        return loadCatalogSnapshotUseCase.loadSnapshot();
+    }
+
+    public CatalogSyncResult syncCatalog() {
+        return syncCatalogUseCase.syncCatalog();
     }
 }

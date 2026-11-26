@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+  <changeSet id="20261115020000-1" author="facundo">
+    <createTable tableName="catalog_sync_state">
+      <column name="id" type="bigint">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="snapshot_version" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+      <column name="last_synced_at" type="${datetimeType}"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

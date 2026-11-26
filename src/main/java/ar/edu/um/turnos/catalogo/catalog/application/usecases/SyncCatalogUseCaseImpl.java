@@ -33,7 +33,7 @@ public class SyncCatalogUseCaseImpl implements SyncCatalogUseCase {
             return rebuildFromSnapshot();
         }
 
-        long localVersion = localState.get().getSnapshotVersion();
+        long localVersion = localState.orElseThrow().getSnapshotVersion();
         CatalogSyncMetadata metadata = catalogChangesPort.fetchMetadata();
 
         if (localVersion >= metadata.getCurrentVersion()) {
@@ -60,7 +60,7 @@ public class SyncCatalogUseCaseImpl implements SyncCatalogUseCase {
                 return rebuildFromSnapshot();
             }
 
-            changeApplier.apply(changeSet.get());
+            changeApplier.apply(changeSet.orElseThrow());
             applied++;
         }
 

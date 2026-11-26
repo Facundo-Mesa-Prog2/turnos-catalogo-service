@@ -94,3 +94,20 @@ management:
   health:
     mail:
       enabled: false
+
+# Integracion con la catedra en tests: valores ficticios.
+
+catedra:
+  base-url: http://localhost:9999
+  jwt: test-jwt-no-valido
+  sync:
+    on-startup: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    topic: test-catalog-topic
+    group-id: test-catalog-group
+  redis:
+    host: localhost
+    port: 6379
+    username: test
+    password: test
